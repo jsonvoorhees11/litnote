@@ -3,6 +3,11 @@ chrome.runtime.onMessage.addListener(
         if (request.contentPopulated) {
             displayModal();
         }
+        else{
+            if(request.hideFrame) {
+                hideModal();
+            }
+        }
     });
 
 let displayModal = () =>{
@@ -10,6 +15,10 @@ let displayModal = () =>{
     frame.style.display = 'block';
 }
 
+let hideModal = () =>{
+    let frame = document.getElementById('note-frame');
+    frame.style.display = 'none';
+}
 
 let createModal = (text) => {
     let frame = document.createElement('iframe');

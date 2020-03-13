@@ -56,5 +56,15 @@ chrome.runtime.onInstalled.addListener(function () {
         chrome.tabs.sendMessage(tabs[0].id, { contentPopulated: true });
       });
     }
+    else{
+      if(request.closeFrame) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          if(!tabs?.length) {
+            return;
+          }
+          chrome.tabs.sendMessage(tabs[0].id, { hideFrame: true });
+        });
+      }
+    }
   })
 });
