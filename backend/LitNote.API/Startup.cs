@@ -1,5 +1,3 @@
-using BooksApi.Models;
-using BooksApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using LitNote.Models;
+using LitNote.Services;
 
 namespace BooksApi
 {
@@ -28,13 +28,13 @@ namespace BooksApi
         #region snippet_ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<BookstoreDatabaseSettings>(
-                Configuration.GetSection(nameof(BookstoreDatabaseSettings)));
+            services.Configure<DbSettings>(
+                Configuration.GetSection(nameof(DbSettings)));
 
-            services.AddSingleton<IBookstoreDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<BookstoreDatabaseSettings>>().Value);
+            services.AddSingleton<IDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<DbSettings>>().Value);
 
-            services.AddSingleton<BookService>();
+            services.AddSingleton<NoteService>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.UseMemberCasing());
