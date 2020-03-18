@@ -1,0 +1,24 @@
+#notes-feed {
+  margin-top: 3em;
+}
+
+.note-container {
+  margin-top:2em;
+  border-radius: .28571429rem;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  transition: box-shadow .1s ease,transform .1s ease;
+}
+
+.note-card {
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.card-divider {
+  border-right: 1px solid #d4d4d5 !important;
+}
+
+.note {
+  font-size: 1em;
+  padding: 1em;
+}

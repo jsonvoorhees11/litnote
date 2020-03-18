@@ -28,6 +28,12 @@ namespace BooksApi
         #region snippet_ConfigureServices
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o=>o.AddPolicy("LocalhostPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+            }));
             services.Configure<DbSettings>(
                 Configuration.GetSection(nameof(DbSettings)));
 
@@ -51,7 +57,7 @@ namespace BooksApi
             {
                 app.UseHsts();
             }
-
+            app.UseCors("LocalhostPolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseEndpoints(endpoints =>
