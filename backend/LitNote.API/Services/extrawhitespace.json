@@ -1,0 +1,5 @@
+{
+    "content": "using (IEnumerator&lt;long&gt; e = source.GetEnumerator())\n            {\n                if (!e.MoveNext())\n                {\n                    ThrowHelper.ThrowNoElementsException();\n                }\n\n                value = e.Current;\n                while (e.MoveNext())\n                {\n                    long x = e.Current;\n                    if (x &gt; value)\n                    {\n                        value = x;\n                    }",
+    "description": "long long",
+    "creator": "jsonvoorhees11"
+}
