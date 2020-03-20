@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using LitNote.Models;
 using MongoDB.Driver;
 
@@ -16,8 +17,12 @@ namespace LitNote.Services
             _notes = database.GetCollection<Note>(settings.NotesCollectionName);
         }
 
-        public List<Note> Get() =>
-            _notes.Find(book => true).ToList();
+        public List<Note> Get()
+        {
+            var notes = _notes.Find(book => true).ToList();
+            notes.ForEach(n => n.Content = GetTrimmedCodeString(n.Content));
+            return notes;
+        }
 
         public Note Get(string id) =>
             _notes.Find<Note>(note => note.Id == id).FirstOrDefault();
@@ -33,5 +38,43 @@ namespace LitNote.Services
 
         public void Remove(string id) => 
             _notes.DeleteOne(note => note.Id == id);
+
+        private string GetTrimmedCodeString(string rawInput)
+        {
+            string result = rawInput.TrimStart();
+            var splitedByNewLine = result.Split('\n');
+            if(splitedByNewLine.Length < 2)
+            {
+                return result;
+            }
+
+            int countWhiteSpace = 0;
+            var firstLine = splitedByNewLine[0];
+            var firstLineWithExtraSpace = splitedByNewLine[1];
+            foreach (char c in firstLineWithExtraSpace)
+            {
+                if (c != ' ')
+                {
+                    break;
+                }
+                countWhiteSpace++;
+            }
+            
+            var stringArr = splitedByNewLine.Skip(1).Select(l =>
+            {
+                if(l.Length < countWhiteSpace)
+                {
+                    return l;
+                }
+                return l.Substring(countWhiteSpace);
+            }).ToArray();
+
+            result = firstLine + stringArr.Aggregate("",(curr,next)=>
+            {
+                return curr + "\n"+ next;
+            });
+
+            return result;
+        }
     }
 }
