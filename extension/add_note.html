@@ -4,6 +4,7 @@
 <head>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Abel');
+        @import url('https://fonts.googleapis.com/css?family=Fira+Code&display=swap');
 
         html,
         body {
@@ -43,7 +44,6 @@
             position: absolute;
             width: 150px;
             height: 100%;
-            background: linear-gradient(#006064, #016269);;
             transition: width 0.4s;
             overflow: hidden;
             z-index: 2;
@@ -70,10 +70,10 @@
         .card .additional .user-card .level,
         .card .additional .user-card .points {
             top: 15%;
-            color: #fff;
+            color: rgb(12, 11, 11);
             font-size: 0.75em;
-            font-weight: bold;
             padding: 0.125rem 0.75rem;
+            font-family: 'Fira Code', monospace;
         }
 
         .card .additional .user-card .points {
@@ -193,6 +193,15 @@
             max-height: 180px;
         }
 
+        #lang-select {
+            position:absolute;
+            bottom: 1rem;
+            right: 4rem;
+        }
+        #lang {
+            font-size: 0.6rem;
+        }
+
     </style>
 </head>
 
@@ -210,6 +219,13 @@
                 <span class="close" id = "close">&times;</span>
                 <textarea id="description"></textarea>
                 <span class="more" id="save">Save</span>
+                <div id="lang-select">
+                    <span><label for="lang">Language:</label></span>
+                    <select id="lang">
+                        <option value="csharp">C#</option>
+                        <option value="text">Text</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

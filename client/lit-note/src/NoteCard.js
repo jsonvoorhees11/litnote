@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Icon, Image, Container, Grid } from 'semantic-ui-react'
 import he from 'he'
+import Highlight from 'react-highlight'
 
 export default class NoteCard extends React.Component{
     constructor(props) {
@@ -29,7 +30,9 @@ export default class NoteCard extends React.Component{
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Container fluid className="note">
-                            <pre><code>{he.decode(this.props.note.Content)}</code></pre>
+                            <Highlight language="csharp">
+                                {he.decode(this.props.note.Content)}    
+                            </Highlight>
                         </Container>
                     </Grid.Column>
                 </Grid.Row>        

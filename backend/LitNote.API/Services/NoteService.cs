@@ -24,8 +24,12 @@ namespace LitNote.Services
             return notes;
         }
 
-        public Note Get(string id) =>
-            _notes.Find<Note>(note => note.Id == id).FirstOrDefault();
+        public Note Get(string id)
+        {
+            var note = _notes.Find<Note>(note => note.Id == id).FirstOrDefault();
+            note.Content = GetTrimmedCodeString(note.Content);
+            return note;
+        }
 
         public Note Create(Note note)
         {

@@ -1,3 +1,5 @@
+let url = 'https://github.com';
+
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
         const message = request.content?.length > 0
@@ -6,6 +8,9 @@ chrome.runtime.onMessage.addListener(
             updateFrameContent(message);
             chrome.runtime.sendMessage({ populated: true });
         }
+        chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+            url = tabs[0].url;
+        });
     });
 
 let updateFrameContent = (message) => {
@@ -28,12 +33,10 @@ saveButton.addEventListener('click', function() {
     const content = document.getElementById('content').innerHTML;
     const description = document.getElementById('description').value;
     const creator = 'jsonvoorhees11';
+    const language = document.getElementById('lang').value;
 
-    pushData('https://localhost:5001/api/notes',{content,description,creator})
-        .then((data)=>{
-            console.log(data);
-        });
-    
+    pushData('https://localhost:5001/api/notes',{content,description,creator,language,url});
+    chrome.runtime.sendMessage({ closeFrame: true });
 })
 
 let pushData = async (url = '', data = {}) => {
