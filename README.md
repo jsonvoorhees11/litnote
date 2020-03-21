@@ -1,4 +1,4 @@
-# LitNote Projects 🔥📝🔥
+# LitNote Project 🔥📝🔥
 
 This is a project to note down code lines as well as plain text that you found interesting.
 
