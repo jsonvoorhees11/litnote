@@ -2,7 +2,9 @@ import React from 'react'
 
 import NoteCard from './NoteCard';
 import {
-  Grid
+  Grid,
+  Container,
+  Header
 } from 'semantic-ui-react'
 export default class NotesFeed extends React.Component {
   constructor(props) {
@@ -56,9 +58,15 @@ export default class NotesFeed extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <Grid container columns={2} id="notes-feed">
-          {this.createNoteCards()}
-        </Grid>
+        <div>
+          <Container text style={{ marginTop: '7em' }}>
+              <Header as='h1'>Notes feed</Header>
+              <p>Explore what people you follow have noted</p>
+          </Container>
+          <Grid container columns={2} id="notes-feed">
+            {this.createNoteCards()}
+          </Grid>
+        </div>
       );
     }
   }
