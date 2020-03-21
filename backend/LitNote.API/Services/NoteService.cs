@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using LitNote.Constants;
 using LitNote.Models;
 using MongoDB.Driver;
 
@@ -33,6 +35,10 @@ namespace LitNote.Services
 
         public Note Create(Note note)
         {
+            if(!CheckValidLanguage(note.Language))
+            {
+                return null;
+            }
             _notes.InsertOne(note);
             return note;
         }
@@ -42,6 +48,13 @@ namespace LitNote.Services
 
         public void Remove(string id) => 
             _notes.DeleteOne(note => note.Id == id);
+
+        private bool CheckValidLanguage(string languague)
+        {
+            return
+                LanguageConstants.ValidLanguageList.Values
+                .Contains(languague,StringComparer.OrdinalIgnoreCase);
+        }
 
         private string GetTrimmedCodeString(string rawInput)
         {

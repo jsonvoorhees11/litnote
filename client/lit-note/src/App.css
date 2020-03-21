@@ -22,3 +22,8 @@
   font-size: 1em;
   padding: 1em;
 }
+.url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

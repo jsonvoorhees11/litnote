@@ -10,7 +10,7 @@ namespace LitNote.Models
         public string Creator { get; set; }
         public long CreatedAt { get; set; }
         public string Url { get; set; }
-        public Language Language { get; set; }
+        public string Language { get; set; }
         public Note()
         {
             Id = Guid.NewGuid().ToString();

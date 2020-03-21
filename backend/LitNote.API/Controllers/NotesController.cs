@@ -38,9 +38,12 @@ namespace LitNote.Controllers
         public ActionResult<Note> Create(Note note)
         {
             var mappedNote = new Note(note);
-            _NoteService.Create(mappedNote);
-
-            return CreatedAtRoute("GetNote", new { id = mappedNote.Id.ToString() }, mappedNote);
+            var createdNote = _NoteService.Create(mappedNote);
+            if(createdNote == null)
+            {
+                return BadRequest(ModelState);
+            }
+            return CreatedAtRoute("GetNote", new { id = createdNote.Id.ToString() }, mappedNote);
         }
 
         [HttpPut("{id:length(24)}")]

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Icon, Image, Container, Grid } from 'semantic-ui-react'
+import { Card, Icon, Image, Container, Grid,Popup } from 'semantic-ui-react'
 import he from 'he'
 import Highlight from 'react-highlight'
 
@@ -22,6 +22,18 @@ export default class NoteCard extends React.Component{
                                 <Card.Meta>
                                     <span className='date'>{new Date(this.props.note.CreatedAt).toLocaleDateString()}</span>
                                 </Card.Meta>
+                                <Popup
+                                    trigger={
+                                    <Card.Meta className="url">
+                                        <span>
+                                            <a href={this.props.note.Url}>
+                                                {this.props.note.Url}
+                                            </a>
+                                        </span>
+                                    </Card.Meta>}
+                                    content={this.props.note.Url}
+                                    position='right center'
+                                    />
                                 <Card.Description>
                                     {this.props.note.Description}
                                 </Card.Description>
@@ -30,7 +42,7 @@ export default class NoteCard extends React.Component{
                     </Grid.Column>
                     <Grid.Column width={12}>
                         <Container fluid className="note">
-                            <Highlight language="csharp">
+                            <Highlight language={this.props.note.Language}>
                                 {he.decode(this.props.note.Content)}    
                             </Highlight>
                         </Container>
