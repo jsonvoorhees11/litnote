@@ -1,6 +1,4 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react'
-import logo from './logo.svg';
 import './App.css';
 import FixedMenuLayout from './Menu.js'
 

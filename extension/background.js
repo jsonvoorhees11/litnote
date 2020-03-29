@@ -17,8 +17,8 @@ chrome.runtime.onInstalled.addListener(function () {
     }]);
   });
   chrome.contextMenus.create({
-    id: "some-command",
-    title: "some title",
+    id: "add-note-command",
+    title: "Add new note",
     contexts: ["all"]
   });
   /* The function that finds and returns the selected text */
@@ -33,13 +33,12 @@ chrome.runtime.onInstalled.addListener(function () {
   }
 
   chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    if (info.menuItemId == "some-command") {
+    if (info.menuItemId == "add-note-command") {
       const jsCodeStr = getJsCodeStr(funcToInject);
       chrome.tabs.executeScript({
         code: jsCodeStr,
         allFrames: true
       }, function (text) {
-        console.log("Sending to content"+text);
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           chrome.tabs.sendMessage(tabs[0].id, { content: text });
         });

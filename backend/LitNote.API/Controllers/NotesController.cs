@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LitNote.Services;
 using LitNote.Models;
 using System;
+using System.Linq;
 
 namespace LitNote.Controllers
 {
@@ -74,6 +75,13 @@ namespace LitNote.Controllers
             _NoteService.Remove(Note.Id);
 
             return NoContent();
+        }
+
+        [HttpGet("supported-languages")]
+        public IActionResult GetSupportedLanguage()
+        {
+            List<string> languages = Enum.GetNames(typeof(Language)).ToList();
+            return Ok(languages);
         }
     }
 }

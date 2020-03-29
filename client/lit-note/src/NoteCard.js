@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Icon, Image, Container, Grid,Popup } from 'semantic-ui-react'
+import { Card, Image, Container, Grid,Popup } from 'semantic-ui-react'
 import he from 'he'
 import Highlight from 'react-highlight'
 

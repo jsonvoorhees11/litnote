@@ -1,4 +1,3 @@
-
 import React from 'react'
 import {
     Container,
@@ -10,17 +9,17 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
-    useRouteMatch,
-    useParams
+    Link
   } from "react-router-dom";
 import NotesFeed from './NotesFeed.js'
 import {AUTHORIZE_URL, OAUTH_CLIENT_ID, HOST_URL} from './configs/app.config'
 import HandleAuth from './HandleAuth.js'
+import CreateNote from './CreateNote.js'
 
 
 const FixedMenuLayout = () => (
     <div>
+        <Router>
         <Menu fixed='top' inverted>
             <Container>
                 <Menu.Item as='a' header>
@@ -28,7 +27,7 @@ const FixedMenuLayout = () => (
           LitNote
                 </Menu.Item>
                 <Menu.Item as='a'>Home</Menu.Item>
-                <Menu.Item as='a'>Create note</Menu.Item>
+                <Menu.Item><Link to="/create-note">Create note</Link></Menu.Item>
                 <Dropdown item simple text='Explore'>
                     <Dropdown.Menu>
                         <Dropdown.Item>People</Dropdown.Item>
@@ -46,23 +45,41 @@ const FixedMenuLayout = () => (
                         <Dropdown.Item>List Item</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <Menu.Item as='a' onClick={login} position="right">
-                    Login
-                </Menu.Item>
+                {getLoginMenuItems()}
             </Container>
         </Menu>
-        <Router>
-            <Switch>
-                <Route path="/handle-auth">
-                    <HandleAuth />
-                </Route>
-                <Route path="/">
-                    <NotesFeed />
-                </Route>
-            </Switch>
+        <Switch>
+            <Route path="/create-note">
+                <CreateNote/>
+            </Route>
+            <Route path="/handle-auth">
+                <HandleAuth />
+            </Route>
+            <Route path="/">
+                <NotesFeed />
+            </Route>
+        </Switch>
         </Router>
     </div>
 )
+
+const getLoginMenuItems = () => {
+    const storedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if(storedUserInfo) {
+        const userName = storedUserInfo["Username"];
+        return  <> <Menu.Item as='a' position="right">
+                    {userName}
+                </Menu.Item>
+                <Menu.Item as='a' position="right">
+                    Logout
+                </Menu.Item> </>
+    }
+    else {
+        return  <Menu.Item as='a' onClick={login} position="right">
+                    Login
+                </Menu.Item>
+    }
+}
 
 const login = () => {
     const stateString = getStateString();

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using LitNote.Models;
 using LitNote.Services;
+using Newtonsoft.Json.Serialization;
+using LitNote.API.Models;
 
 namespace BooksApi
 {
@@ -35,11 +37,16 @@ namespace BooksApi
                         .AllowAnyHeader()
                         .AllowAnyMethod();
             }));
+
             services.Configure<DbSettings>(
                 Configuration.GetSection(nameof(DbSettings)));
-
             services.AddSingleton<IDbSettings>(sp =>
                 sp.GetRequiredService<IOptions<DbSettings>>().Value);
+
+            services.Configure<GitHubOAuthSettings>(
+                Configuration.GetSection(nameof(GitHubOAuthSettings)));
+            services.AddSingleton<IGitHubOAuthSettings>(sp =>
+                sp.GetRequiredService<IOptions<GitHubOAuthSettings>>().Value);
 
             services.AddSingleton<NoteService>();
 
